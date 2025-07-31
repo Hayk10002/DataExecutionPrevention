@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include <memory>
 
 int f()
@@ -9,7 +10,7 @@ int f()
 int main()
 {
     std::byte f_buffer[32];
-    std::copy(reinterpret_cast<std::byte*>(&f), reinterpret_cast<std::byte*>(&f_buffer), sizeof(f_buffer));
+    std::copy((std::byte*)(&f), (std::byte*)(&f) + sizeof(f_buffer), f_buffer);
 
     int (*f_in_stack)() = reinterpret_cast<int(*)()>(f_buffer);
 
