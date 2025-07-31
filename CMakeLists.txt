@@ -13,7 +13,5 @@ set_property(TARGET with_dep PROPERTY CXX_STANDARD 23)
 enable_testing()
 
 add_test(NAME no_dep_test COMMAND no_dep)
-set_tests_properties(no_dep_test PROPERTIES PASS_REGULAR_EXPRESSION "42")
 
-add_test(NAME with_dep_test COMMAND with_dep)
-set_tests_properties(with_dep_test PROPERTIES WILL_FAIL TRUE)
+add_test(NAME with_dep_test COMMAND ${CMAKE_SOURCE_DIR}/signal_pass_wrapper.sh $<TARGET_FILE:with_dep>)

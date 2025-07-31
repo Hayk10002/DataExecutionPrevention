@@ -16,10 +16,16 @@ void f()
 
 int main()
 {
-    std::byte f_buffer[256];
-    std::memcpy((void*)f_buffer, (void*)&f, sizeof(f_buffer));
+    unsigned char code[] = 
+    {
+        0x48, 0x31, 0xc0, // xor rax, rax
+        0xc3,             // ret
+    };
 
-    auto f_in_stack = (void(*)())(f_buffer);
+    void (*func)() = (void(*)())code;
+    func(); 
 
-    f_in_stack();
+    std::cout << "Shellcode executed!\n";
+
+    return 0;
 }
